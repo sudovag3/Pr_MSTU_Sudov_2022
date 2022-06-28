@@ -1,0 +1,416 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<title>be1.ru</title>
+	{% load static %}
+</head>
+<body>
+<p dir="ltr"><strong>НАУЧНАЯ ДОКУМЕНТАЦИЯ ДЛЯ ПОЛЬЗОВАТЕЛЯ ПРОГРАММЫ&nbsp;</strong></p>
+
+<p><br />
+&nbsp;</p>
+<p><a href="/bisection_method_calculator">Калькулятор метода Биссекции</a></p>
+<p><a href="/newton_method_calculator">Калькулятор метода Ньютона</a></p>
+<p><a href="/chord_method_calculator">Калькулятор метода Хорд</a></p>
+<p><a href="/simple_iteration_method_calculator">Калькулятор метода простой итерации</a></p>
+
+<h2 dir="ltr"><strong>&sect;0. Корни нелинейных уравнений</strong></h2>
+
+<p>&nbsp;</p>
+
+<p dir="ltr"><strong>Для численного решения задачи необходимо задать допустимую погрешность e.</strong></p>
+
+<p dir="ltr"><strong>Этапы нахождения корня:</strong></p>
+
+<p dir="ltr">1.&nbsp;<strong>Определяем диапазон,&nbsp;в котором находится единственный корень уравнения.</strong></p>
+
+<p dir="ltr">2.&nbsp;<strong>Находим корень уравнения с заданной допустимой погрешностью e.</strong></p>
+
+<p dir="ltr"><strong>Теоремы для общего понимания:</strong></p>
+
+<p dir="ltr">1.&nbsp;<strong>Теорема Больцано-Коши</strong></p>
+
+<p dir="ltr"><strong>&nbsp; &nbsp; Если непрерывная функция, определенная на вещественном интервале, принимает два значения, то она принимает и любое значение между ними.</strong></p>
+
+<p dir="ltr">2.&nbsp;<strong>Следствие из теоремы Больцано-Коши</strong></p>
+
+<p dir="ltr"><strong>&nbsp; &nbsp; Если функция непрерывна на некотором отрезке и на концах этого отрезка принимает значения противоположных знаков, то</strong><strong>&nbsp;существует точка, в&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; которой значение функции равно нулю.</strong></p>
+
+<p><br />
+&nbsp;</p>
+
+<h2 dir="ltr"><strong>Рекомендуемые способы отделения корней</strong></h2>
+
+<p>&nbsp;</p>
+
+<p dir="ltr"><strong>В вычислительной практике обычно используются следующие способы определения наличия корней, их количества и нахождения для каждого из корней&nbsp;достаточно малого отрезка [a, b], которому он принадлежит:</strong></p>
+
+<p>&nbsp;</p>
+
+<p dir="ltr"><strong>1) средствами машинной графики: функция f(x)&nbsp;представляется на дисплее и приближенно определяются отрезки, которым принадлежат нули функции;</strong></p>
+
+<p dir="ltr"><strong>2) средствами математического анализа с помощью исследования функций и построения графиков;</strong></p>
+
+<p dir="ltr"><strong>3) формированием простых функций&nbsp;<img alt="f_1(x)" src="https://lh5.googleusercontent.com/8dptiWmdayTBlQtQtI1Lw2-oNM0-mLxeClj6Fms73qBAkH3xDfXeIhlr3mFY1uQCG0B4j_PNKtqw8E-8FDukWQ02TCkB1vb7ZXrdeTBp7ju9Rp_4q4UOFUJiOQ1SfAluZ5jD46zW7IQr5oTdDg" />&nbsp;и&nbsp;<img alt="f_2(x)" src="https://lh5.googleusercontent.com/OubNu9sGzPepxcRV4Pbcwu0ofQHwD6RipqGM5o4qC_BXftCRkqzIBu9ASrZZcLiqOBx8CfiVi6ceQHM463jyX55QcEi28GREqJdjgTT-Qh7MRkoqQj3ipxh6ka-K_hSwDrm5we3wK6RuJC5vuA" />&nbsp;таких, что получается равносильное уравнение в виде</strong><img alt="" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMMAAAAfCAYAAABag3n+AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAAEnQAABJ0Ad5mH3gAAA7qSURBVHhe7dxHrBzVEgbgY0zO0QTb5JxzsAGRMYicFmSEWIAELIAFAiQQYoEwCwReYMkIgTBgksk555xzzjnn2K+/87r9+jbdMz0z99ljuL/UmutOc7pO1V9/1enxsCRFGMIQhhBmyT6HMIR/PYaCYQhDyDAUDEMYQoYZHgxKlj///DNuvcI9/vjjj/DXX39le4bw+++/R5v0Whq63r3+ybad4QX066+/Hrc555wzjB07NswxxxzZkc5x0003hW+++SasvPLKYcMNN8z2/nvx/fffh4kTJ4Yll1wybLTRRmGllVbKjnSO1157LUydOjXsvPPOYfnllw9zzz13duSfg+Gnpsj+bouvvvoq3HPPPeHSSy8Nt956a3jzzTfDiBEjwgILLJCd0RleffXV8Oijj0YH3mSTTeJ9Zpml+2Qlrl955ZUYXPmEDRs2LDva3/jll1/CO++8Ey6++OJw/fXXhyeffDL8/PPP8Tm6wfvvvx+uvvrq6MQbbLBBJAiE0wtkhiuuuCLMN998YZFFFumJuKYXZLJPP/00fPzxx9E/WgVxR8Fw9913x+2JJ54Ijz32WHS81VdfPYwcOTLMNtts2VntYVDffvttmDx5cvjiiy/CeuutF9Zee+2eAgFM0o8//hjeeOON8Pzzz8excYCZISDefffdMGXKlGhTtn322Wfj/u233z5+doLvvvsuzpFgGDNmTNwWW2yx7Gh3YEdk9dRTT4UPPvggzDPPPGHppZfOjvYfEAk/oBb4gmBA3uw866yzVhJvI+/jvG4uG2Cv0aNHR2N8+OGHMVv89ttv2ZnN4PzHH388PPDAA2GuueYKm266aXakN8w+++yRBbHphRdeGF566aXw008/ZUf7F8bI+S+55JI49kUXXTRKnM8++yw7ozO8/fbb8X4mfdy4cWGJJZbIjnQPjiMb7L///jHbPPjgg5HQ+hVscN1114ULLrggvPjii5Eg+AOCsMmcZb9tFAwKUxElwrAsh+PAu+22W2T0TmWSiT7//PPDCiusEO/Ta/ouwlhIAtuNN94YA7bfgbEefvjhmCVXW221GBBk42abbZad0RyIC3tzWI4rIwwfPjw72hsE15prrhkWXnjh8NZbb8Xv6UeQRnfccUeUm1tssUU444wzwjHHHBOOO+64aNOzzjorHiuTTaNg+PXXX8P9998fJws7bLXVVuGkk06KW6dFGRaUvp5++umwzjrrhLXWWis7MnjAhFtuuWVkgPfeey/b27/46KOPok04G4I44YQTwplnnhn23Xff7IzmUC+pN2RsRbNsOdjYcccd4yel0I8QpDbPvscee0T1AQsttFBYZZVVwoorrhgladk3GgWDwumZZ54JX3/9dbzhMsssEx3O1mkRpZgRtSbe9fPPP392ZPAgYDfeeOPwww8/RCcTxP0MdtVEWHzxxePY1WA2tu4Uzz33XAyEUaNGxXv1WodVQcDKNhogn3zySd+1W2VFSkYQrLrqqtPqWWOmHHTXkMbnn38efTtHS0splB555JFY0LmYYTkYg4s8f3dqCBPvegG14IIL1k6WQQqc++67L2o/mYnOI7H8ne+rkkE6Bssuu2xM56If8/YbPB8bsi+iUeAhlhdeeCF22Ni+G9DF7i1jt2pqfPnll/G7r7rqqmhLulpAmudbbrll2j4NiTI4k5rRmNUmndaM/2/wCc/n+TVVig0UNiYd1cD8iz/laBkMbmpiFLv+xlRkjn1Ssb9p1E7AuCaaLp533nmzvQPhvpzYd+iK6GDpcdto64ceeihcc801sRslWMoQYALCpBm3Ses3cCDBoIlAMmIptZPAYN+qIG8CjAh1nR7kxVE4se++8847o36+7LLLwr333hu/+7bbbosNCPatGgcSU+RrBwuoJsGQN2EUsgrvbja+U2TyOphv2bEKFEkeIOxgPDlaBgMZs+6660adRWostdRSsQ2at0IZpdPizEO9/PLLUR7VSay8JaZjsd9++4Vjjz02GuHkk08Op59+eqwHFJjuc/nll2dXDYRxmTBZAQP0G7CWeol+ZQu2XH/99afZl+07BYczTya6rpWq/rNWZCN3TjzxxNhxsjinyy4ot9122xiY5513XswUVTA+MizPRO2gCSOza8IguG42skz2agfFfRMCRAxFMm8ZDJy/WCDTW/5tdVcwdLK2UARHpWnzwqYMGUGHRRAweq6fOYzgNIlYDbPWQXYw/rrvmNFgu2InzqcuHdvajL0TcDbZVFaVFatqMecIlptvvjl2Wbbbbrt4HtuyF/IgX+H222+P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" /><strong>&nbsp;, и дальнейшим построением графиков этих функций. Нулями функции в данном случае будут являться абсциссы точек&nbsp;пересечения функций f<sub>1</sub>(x) и f<sub>2</sub>(x).&nbsp;</strong><br />
+&nbsp;</p>
+
+<p dir="ltr"><strong>&sect;1. МЕТОД БИССЕКЦИИ.</strong></p>
+
+<p>&nbsp;</p>
+
+<ol>
+	<li dir="ltr">
+	<p dir="ltr"><strong>Описание метода.</strong></p>
+	</li>
+</ol>
+
+<p dir="ltr"><strong>Дана функция f(x), являющаяся непрерывной на промежутке [a, b] и содержащая на нём одно нулевое значение. Дана допустимая погрешность&nbsp;e&gt;0 с которой требуется вычислить приближенное значение x, чтобы выполнялось условие f(x)=0.</strong></p>
+
+<p dir="ltr"><strong>Находим число c - середину отрезка [a, b].&nbsp;</strong></p>
+
+<p dir="ltr"><strong>После нахождения c вычисляется значение f(c). Далее рассматриваем знаки значений&nbsp;f(a), f(b), f(c). Если f(a) и f(c) разных знаков, то за новое значение конца промежутка b принимаем значение c и повторяем действия описанные выше. Для ситуации, когда f(b) и f(c) разных знаков работаем аналогично.</strong></p>
+
+<p dir="ltr"><strong>&nbsp; &nbsp; &nbsp; &nbsp;</strong>2.<strong>&nbsp;Критерий окончания.</strong></p>
+
+<p dir="ltr"><strong>Алгоритм повторяется до тех пор, пока не выполнится&nbsp;условие: разница между нынешним и предыдущим значениями c меньше заданной допустимой погрешности.</strong></p>
+
+<p dir="ltr"><strong>&nbsp; &nbsp; &nbsp; &nbsp;</strong>3.&nbsp;<strong>Ограничения</strong></p>
+
+<p dir="ltr"><strong>Функция должна:</strong></p>
+
+<ul dir="ltr">
+	<li><strong>быть непрерывна на заданном промежутке [a, b]</strong></li>
+	<li><strong>содержать на промежутке [a, b] только один корень</strong></li>
+	<li><strong>удовлетворять условию f(a)*f(b)&lt;0 (т.к. f(a) и f(b) разных знаков, и по первому ограничению функция непрерывна, то по следствию из теоремы Больцано-Коши на промежутке [a, b]&nbsp;</strong><strong>существует точка, в которой значение функции равно нулю</strong><strong>)</strong></li>
+</ul>
+
+<p dir="ltr"><br />
+&nbsp;</p>
+
+<p dir="ltr"><strong>&sect;2. КОМБИНИРОВАННЫЙ МЕТОД</strong></p>
+
+<p dir="ltr"><strong>(МЕТОД ХОРД И КАСАТЕЛЬНЫХ)</strong></p>
+
+<p>&nbsp; &nbsp; &nbsp; &nbsp;1.<strong>&nbsp;Описание метода</strong></p>
+
+<p><strong>Дана функция f(x), являющаяся непрерывной на промежутке [a, b] и содержащая на нём одно нулевое значение. Дана допустимая погрешность&nbsp;e&gt;0 с которой требуется вычислить приближенное значение x, чтобы выполнялось условие f(x)=0.</strong></p>
+
+<p><strong>Случай, когда&nbsp;</strong><strong>f &lsquo;(x) f &rsquo;&rsquo;(x)&gt;0:</strong></p>
+
+<p><img src="https://lh6.googleusercontent.com/h5cM4adnLQmcSE-DjJkti0DItvLC0To0CMQmmyTNZP3-GLbeeAdKyb9fHRlSCuC6_5J_q_kytqk_IGrKM9iRcTuPk14ae-mLMn4OweoF-rOlwIfJj8iskZP2SrI_wUZyfB_k2NlKSdJ_x-hUCA" /></p>
+
+<p><strong>Формулы для пересчета концов отрезка локализации корня для случая&nbsp;</strong><strong>f &lsquo;(x) f &rsquo;&rsquo;(x)&gt;0:</strong></p>
+
+<p><img src="https://lh5.googleusercontent.com/FpDUf1Vq1rogVilJ1rJfgTX5Uo-YWqzFXICj_jYWoPEpHhEqScy-cK3mw9hp5hwEqsRrCaaJvun70fVo_AWybIatHAUhslacVDByhVgBFn_r81hKdOsjZsl1Ujh_XORjq2yjm211_YNgtWvSyw" /></p>
+
+<p><strong>Случай, когда&nbsp;f &lsquo;(x) f &rsquo;&rsquo;(x)&lt;0:</strong></p>
+
+<p><img src="https://lh3.googleusercontent.com/wsY8YTXUHCOcfs8FBksFMxjBi3Q0DoV60ZYANa3PD38TCjegt7O6cB_Px0KWIBZEGeC1t6Nul2QbV2EQdjihP5D_qrFMGLfwmCKMRAARfGYhtYRxG5tO24uF4pYvpx0GtQ7X2oSfpDy395AdvQ" /></p>
+
+<p><strong>Формулы для пересчета концов отрезка локализации корня для случая&nbsp;f &lsquo;(x) f &rsquo;&rsquo;(x)&lt;0:</strong></p>
+
+<p><img src="https://lh4.googleusercontent.com/Q17iJRFkqR-BtlLoHcAuX2gFsKLVXx02_EvnmdAYSE3wNKqmDCS-Pd0_wagvmchvExedfZ2OmfXV6cIPYUA80KddS9ike019tJhMh7b1MttAo9nXMq3ojf3V-87IujEfUtw2XiWm3JNpCFjg_w" /></p>
+
+<p dir="ltr"><strong>За&nbsp;a принимаем такую точку, чтобы сама функция и вторая её производная были одного знака, а за b второй конец промежутка.</strong></p>
+
+<p dir="ltr">&nbsp; &nbsp; &nbsp; &nbsp;2.&nbsp;<strong>Критерий окончания</strong></p>
+
+<p dir="ltr"><strong>Вычисляем новые значения для a и b до тех пор, пока длина отрезка локализации корня не станет меньше или равна заданной точности.</strong></p>
+
+<p dir="ltr">&nbsp; &nbsp; &nbsp; &nbsp;3.&nbsp;<strong>Ограничения</strong></p>
+
+<p dir="ltr"><strong>Функция должна:</strong></p>
+
+<ul dir="ltr">
+	<li><strong>быть непрерывна на заданном промежутке [a, b]</strong></li>
+	<li><strong>содержать на промежутке [a, b] только один корень</strong></li>
+	<li><strong>удовлетворять условию f(a)*f(b)&lt;0&nbsp;</strong><strong>(т.к. f(a) и f(b) разных знаков, и по первому ограничению функция непрерывна, то по следствию из теоремы Больцано-Коши на промежутке [a, b]&nbsp;</strong><strong>существует точка, в которой значение функции равно нулю</strong><strong>)</strong></li>
+	<li><strong>удовлетворять условию непрерывности первой и второй производной на промежутке [a, b]</strong></li>
+</ul>
+
+<p dir="ltr">&nbsp;</p>
+
+<p dir="ltr"><strong>&sect;3. МЕТОД ПРОСТЫХ ИТЕРАЦИЙ.</strong></p>
+
+<p>&nbsp; &nbsp; &nbsp; &nbsp;1.&nbsp;<strong>Описание метода</strong></p>
+
+<p><strong>Дана функция f(x), являющаяся непрерывной на промежутке [a, b] и содержащая на нём одно нулевое значение. Дана допустимая погрешность&nbsp;e&gt;0 с которой требуется вычислить приближенное значение x, чтобы выполнялось условие f(x)=0.</strong></p>
+
+<p><strong>Преобразуем функцию вида f(x)=0 к виду x=q(x) (т.е. выразим x).&nbsp;</strong></p>
+
+<p><strong>Выбираем начальное число c из промежутка [a, b] и подставляем в функцию&nbsp;x=q(x), получаем x=q(c).</strong></p>
+
+<p><strong>Вычисляем значение x. Полученное значение можно обозначить как новое значение c, которые мы вновь подставляем в функцию.</strong></p>
+
+<p>&nbsp; &nbsp; &nbsp; &nbsp;2.&nbsp;<strong>Критерий окончания</strong></p>
+
+<p><strong>Производим выше описанные манипуляции до тех пор, пока разница между x<sub>n</sub>=q(x<sub>n-1</sub>) и x<sub>n+1</sub>=q(x<sub>n</sub>)&nbsp;не будет меньше допустимой&nbsp;погрешности.</strong></p>
+
+<p>&nbsp; &nbsp; &nbsp; &nbsp;3.&nbsp;<strong>Условие сходимости</strong></p>
+
+<p><strong>Достаточным условием сходимости метода простых итераций является условие:&nbsp;</strong><img alt="" src="data:image/png;base64,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" /></p>
+
+<p><strong>которое выполняется для любого&nbsp;<em>х,</em>&nbsp;принадлежащего отрезку [<em>а</em>,&nbsp;<em>b</em>], содержащему корень уравнения.</strong></p>
+
+<p><strong>Наглядный пример свойства сходимости:</strong></p>
+
+<p><img alt="Метод простых итераций" src="https://studme.org/htm/img/15/2505/85.png" /></p>
+
+<p>&nbsp; &nbsp; &nbsp; &nbsp;4.&nbsp;<strong>Ограничения</strong></p>
+
+<p dir="ltr"><strong>Функция должна:</strong></p>
+
+<ul dir="ltr">
+	<li><strong>быть непрерывна на заданном промежутке [a, b]</strong></li>
+	<li><strong>содержать на промежутке [a, b] только один корень</strong></li>
+	<li><strong>удовлетворять условию f(a)*f(b)&lt;0</strong>&nbsp;<strong>(т.к. f(a) и f(b) разных знаков, и по первому ограничению функция непрерывна, то по следствию из теоремы Больцано-Коши на промежутке [a, b]&nbsp;</strong><strong>существует точка, в которой значение функции равно нулю</strong><strong>)</strong></li>
+</ul>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p dir="ltr"><strong>НАУЧНАЯ ДОКУМЕНТАЦИЯ ДЛЯ ПОЛЬЗОВАТЕЛЯ ПРОГРАММЫ&nbsp;</strong></p>
+
+<p><br />
+&nbsp;</p>
+
+<h2 dir="ltr"><strong>&sect;0. Корни нелинейных уравнений</strong></h2>
+
+<p>&nbsp;</p>
+
+<p dir="ltr"><strong>Для численного решения задачи необходимо задать допустимую погрешность e.</strong></p>
+
+<p dir="ltr"><strong>Этапы нахождения корня:</strong></p>
+
+<p dir="ltr">1.&nbsp;<strong>Определяем диапазон,&nbsp;в котором находится единственный корень уравнения.</strong></p>
+
+<p dir="ltr">2.&nbsp;<strong>Находим корень уравнения с заданной допустимой погрешностью e.</strong></p>
+
+<p dir="ltr"><strong>Теоремы для общего понимания:</strong></p>
+
+<p dir="ltr">1.&nbsp;<strong>Теорема Больцано-Коши</strong></p>
+
+<p dir="ltr"><strong>&nbsp; &nbsp; Если непрерывная функция, определенная на вещественном интервале, принимает два значения, то она принимает и любое значение между ними.</strong></p>
+
+<p dir="ltr">2.&nbsp;<strong>Следствие из теоремы Больцано-Коши</strong></p>
+
+<p dir="ltr"><strong>&nbsp; &nbsp; Если функция непрерывна на некотором отрезке и на концах этого отрезка принимает значения противоположных знаков, то</strong><strong>&nbsp;существует точка, в&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; которой значение функции равно нулю.</strong></p>
+
+<p><br />
+&nbsp;</p>
+
+<h2 dir="ltr"><strong>Рекомендуемые способы отделения корней</strong></h2>
+
+<p>&nbsp;</p>
+
+<p dir="ltr"><strong>В вычислительной практике обычно используются следующие способы определения наличия корней, их количества и нахождения для каждого из корней&nbsp;достаточно малого отрезка [a, b], которому он принадлежит:</strong></p>
+
+<p>&nbsp;</p>
+
+<p dir="ltr"><strong>1) средствами машинной графики: функция f(x)&nbsp;представляется на дисплее и приближенно определяются отрезки, которым принадлежат нули функции;</strong></p>
+
+<p dir="ltr"><strong>2) средствами математического анализа с помощью исследования функций и построения графиков;</strong></p>
+
+<p dir="ltr"><strong>3) формированием простых функций&nbsp;<img alt="f_1(x)" src="https://lh5.googleusercontent.com/8dptiWmdayTBlQtQtI1Lw2-oNM0-mLxeClj6Fms73qBAkH3xDfXeIhlr3mFY1uQCG0B4j_PNKtqw8E-8FDukWQ02TCkB1vb7ZXrdeTBp7ju9Rp_4q4UOFUJiOQ1SfAluZ5jD46zW7IQr5oTdDg" />&nbsp;и&nbsp;<img alt="f_2(x)" src="https://lh5.googleusercontent.com/OubNu9sGzPepxcRV4Pbcwu0ofQHwD6RipqGM5o4qC_BXftCRkqzIBu9ASrZZcLiqOBx8CfiVi6ceQHM463jyX55QcEi28GREqJdjgTT-Qh7MRkoqQj3ipxh6ka-K_hSwDrm5we3wK6RuJC5vuA" />&nbsp;таких, что получается равносильное уравнение в виде</strong><img alt="" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMMAAAAfCAYAAABag3n+AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAAEnQAABJ0Ad5mH3gAAA7qSURBVHhe7dxHrBzVEgbgY0zO0QTb5JxzsAGRMYicFmSEWIAELIAFAiQQYoEwCwReYMkIgTBgksk555xzzjnn2K+/87r9+jbdMz0z99ljuL/UmutOc7pO1V9/1enxsCRFGMIQhhBmyT6HMIR/PYaCYQhDyDAUDEMYQoYZHgxKlj///DNuvcI9/vjjj/DXX39le4bw+++/R5v0Whq63r3+ybad4QX066+/Hrc555wzjB07NswxxxzZkc5x0003hW+++SasvPLKYcMNN8z2/nvx/fffh4kTJ4Yll1wybLTRRmGllVbKjnSO1157LUydOjXsvPPOYfnllw9zzz13duSfg+Gnpsj+bouvvvoq3HPPPeHSSy8Nt956a3jzzTfDiBEjwgILLJCd0RleffXV8Oijj0YH3mSTTeJ9Zpml+2Qlrl955ZUYXPmEDRs2LDva3/jll1/CO++8Ey6++OJw/fXXhyeffDL8/PPP8Tm6wfvvvx+uvvrq6MQbbLBBJAiE0wtkhiuuuCLMN998YZFFFumJuKYXZLJPP/00fPzxx9E/WgVxR8Fw9913x+2JJ54Ijz32WHS81VdfPYwcOTLMNtts2VntYVDffvttmDx5cvjiiy/CeuutF9Zee+2eAgFM0o8//hjeeOON8Pzzz8excYCZISDefffdMGXKlGhTtn322Wfj/u233z5+doLvvvsuzpFgGDNmTNwWW2yx7Gh3YEdk9dRTT4UPPvggzDPPPGHppZfOjvYfEAk/oBb4gmBA3uw866yzVhJvI+/jvG4uG2Cv0aNHR2N8+OGHMVv89ttv2ZnN4PzHH388PPDAA2GuueYKm266aXakN8w+++yRBbHphRdeGF566aXw008/ZUf7F8bI+S+55JI49kUXXTRKnM8++yw7ozO8/fbb8X4mfdy4cWGJJZbIjnQPjiMb7L///jHbPPjgg5HQ+hVscN1114ULLrggvPjii5Eg+AOCsMmcZb9tFAwKUxElwrAsh+PAu+22W2T0TmWSiT7//PPDCiusEO/Ta/ouwlhIAtuNN94YA7bfgbEefvjhmCVXW221GBBk42abbZad0RyIC3tzWI4rIwwfPjw72hsE15prrhkWXnjh8NZbb8Xv6UeQRnfccUeUm1tssUU444wzwjHHHBOOO+64aNOzzjorHiuTTaNg+PXXX8P9998fJws7bLXVVuGkk06KW6dFGRaUvp5++umwzjrrhLXWWis7MnjAhFtuuWVkgPfeey/b27/46KOPok04G4I44YQTwplnnhn23Xff7IzmUC+pN2RsRbNsOdjYcccd4yel0I8QpDbPvscee0T1AQsttFBYZZVVwoorrhgladk3GgWDwumZZ54JX3/9dbzhMsssEx3O1mkRpZgRtSbe9fPPP392ZPAgYDfeeOPwww8/RCcTxP0MdtVEWHzxxePY1WA2tu4Uzz33XAyEUaNGxXv1WodVQcDKNhogn3zySd+1W2VFSkYQrLrqqtPqWWOmHHTXkMbnn38efTtHS0splB555JFY0LmYYTkYg4s8f3dqCBPvegG14IIL1k6WQQqc++67L2o/mYnOI7H8ne+rkkE6Bssuu2xM56If8/YbPB8bsi+iUeAhlhdeeCF22Ni+G9DF7i1jt2pqfPnll/G7r7rqqmhLulpAmudbbrll2j4NiTI4k5rRmNUmndaM/2/wCc/n+TVVig0UNiYd1cD8iz/laBkMbmpiFLv+xlRkjn1Ssb9p1E7AuCaaLp533nmzvQPhvpzYd+iK6GDpcdto64ceeihcc801sRslWMoQYALCpBm3Ses3cCDBoIlAMmIptZPAYN+qIG8CjAh1nR7kxVE4se++8847o36+7LLLwr333hu/+7bbbosNCPatGgcSU+RrBwuoJsGQN2EUsgrvbja+U2TyOphv2bEKFEkeIOxgPDlaBgMZs+6660adRWostdRSsQ2at0IZpdPizEO9/PLLUR7VSay8JaZjsd9++4Vjjz02GuHkk08Op59+eqwHFJjuc/nll2dXDYRxmTBZAQP0G7CWeol+ZQu2XH/99afZl+07BYczTya6rpWq/rNWZCN3TjzxxNhxsjinyy4ot9122xiY5513XswUVTA+MizPRO2gCSOza8IguG42skz2agfFfRMCRAxFMm8ZDJy/WCDTW/5tdVcwdLK2UARHpWnzwqYMGUGHRRAweq6fOYzgNIlYDbPWQXYw/rrvmNFgu2InzqcuHdvajL0TcDbZVFaVFatqMecIlptvvjl2Wbbbbrt4HtuyF/IgX+H222+P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" /><strong>&nbsp;, и дальнейшим построением графиков этих функций. Нулями функции в данном случае будут являться абсциссы точек&nbsp;пересечения функций f<sub>1</sub>(x) и f<sub>2</sub>(x).&nbsp;</strong><br />
+&nbsp;</p>
+
+<p dir="ltr"><strong>&sect;1. МЕТОД БИССЕКЦИИ.</strong></p>
+
+<p>&nbsp;</p>
+
+<ol>
+	<li dir="ltr">
+	<p dir="ltr"><strong>Описание метода.</strong></p>
+	</li>
+</ol>
+
+<p dir="ltr"><strong>Дана функция f(x), являющаяся непрерывной на промежутке [a, b] и содержащая на нём одно нулевое значение. Дана допустимая погрешность&nbsp;e&gt;0 с которой требуется вычислить приближенное значение x, чтобы выполнялось условие f(x)=0.</strong></p>
+
+<p dir="ltr"><strong>Находим число c - середину отрезка [a, b].&nbsp;</strong></p>
+
+<p dir="ltr"><strong>После нахождения c вычисляется значение f(c). Далее рассматриваем знаки значений&nbsp;f(a), f(b), f(c). Если f(a) и f(c) разных знаков, то за новое значение конца промежутка b принимаем значение c и повторяем действия описанные выше. Для ситуации, когда f(b) и f(c) разных знаков работаем аналогично.</strong></p>
+
+<p dir="ltr"><strong>&nbsp; &nbsp; &nbsp; &nbsp;</strong>2.<strong>&nbsp;Критерий окончания.</strong></p>
+
+<p dir="ltr"><strong>Алгоритм повторяется до тех пор, пока не выполнится&nbsp;условие: разница между нынешним и предыдущим значениями c меньше заданной допустимой погрешности.</strong></p>
+
+<p dir="ltr"><strong>&nbsp; &nbsp; &nbsp; &nbsp;</strong>3.&nbsp;<strong>Ограничения</strong></p>
+
+<p dir="ltr"><strong>Функция должна:</strong></p>
+
+<ul dir="ltr">
+	<li><strong>быть непрерывна на заданном промежутке [a, b]</strong></li>
+	<li><strong>содержать на промежутке [a, b] только один корень</strong></li>
+	<li><strong>удовлетворять условию f(a)*f(b)&lt;0 (т.к. f(a) и f(b) разных знаков, и по первому ограничению функция непрерывна, то по следствию из теоремы Больцано-Коши на промежутке [a, b]&nbsp;</strong><strong>существует точка, в которой значение функции равно нулю</strong><strong>)</strong></li>
+</ul>
+
+<p dir="ltr"><br />
+&nbsp;</p>
+
+<p dir="ltr"><strong>&sect;2. КОМБИНИРОВАННЫЙ МЕТОД</strong></p>
+
+<p dir="ltr"><strong>(МЕТОД ХОРД И КАСАТЕЛЬНЫХ)</strong></p>
+
+<p>&nbsp; &nbsp; &nbsp; &nbsp;1.<strong>&nbsp;Описание метода</strong></p>
+
+<p><strong>Дана функция f(x), являющаяся непрерывной на промежутке [a, b] и содержащая на нём одно нулевое значение. Дана допустимая погрешность&nbsp;e&gt;0 с которой требуется вычислить приближенное значение x, чтобы выполнялось условие f(x)=0.</strong></p>
+
+<p><strong>Случай, когда&nbsp;</strong><strong>f &lsquo;(x) f &rsquo;&rsquo;(x)&gt;0:</strong></p>
+
+<p><img src="https://lh6.googleusercontent.com/h5cM4adnLQmcSE-DjJkti0DItvLC0To0CMQmmyTNZP3-GLbeeAdKyb9fHRlSCuC6_5J_q_kytqk_IGrKM9iRcTuPk14ae-mLMn4OweoF-rOlwIfJj8iskZP2SrI_wUZyfB_k2NlKSdJ_x-hUCA" /></p>
+
+<p><strong>Формулы для пересчета концов отрезка локализации корня для случая&nbsp;</strong><strong>f &lsquo;(x) f &rsquo;&rsquo;(x)&gt;0:</strong></p>
+
+<p><img src="https://lh5.googleusercontent.com/FpDUf1Vq1rogVilJ1rJfgTX5Uo-YWqzFXICj_jYWoPEpHhEqScy-cK3mw9hp5hwEqsRrCaaJvun70fVo_AWybIatHAUhslacVDByhVgBFn_r81hKdOsjZsl1Ujh_XORjq2yjm211_YNgtWvSyw" /></p>
+
+<p><strong>Случай, когда&nbsp;f &lsquo;(x) f &rsquo;&rsquo;(x)&lt;0:</strong></p>
+
+<p><img src="https://lh3.googleusercontent.com/wsY8YTXUHCOcfs8FBksFMxjBi3Q0DoV60ZYANa3PD38TCjegt7O6cB_Px0KWIBZEGeC1t6Nul2QbV2EQdjihP5D_qrFMGLfwmCKMRAARfGYhtYRxG5tO24uF4pYvpx0GtQ7X2oSfpDy395AdvQ" /></p>
+
+<p><strong>Формулы для пересчета концов отрезка локализации корня для случая&nbsp;f &lsquo;(x) f &rsquo;&rsquo;(x)&lt;0:</strong></p>
+
+<p><img src="https://lh4.googleusercontent.com/Q17iJRFkqR-BtlLoHcAuX2gFsKLVXx02_EvnmdAYSE3wNKqmDCS-Pd0_wagvmchvExedfZ2OmfXV6cIPYUA80KddS9ike019tJhMh7b1MttAo9nXMq3ojf3V-87IujEfUtw2XiWm3JNpCFjg_w" /></p>
+
+<p dir="ltr"><strong>За&nbsp;a принимаем такую точку, чтобы сама функция и вторая её производная были одного знака, а за b второй конец промежутка.</strong></p>
+
+<p dir="ltr">&nbsp; &nbsp; &nbsp; &nbsp;2.&nbsp;<strong>Критерий окончания</strong></p>
+
+<p dir="ltr"><strong>Вычисляем новые значения для a и b до тех пор, пока длина отрезка локализации корня не станет меньше или равна заданной точности.</strong></p>
+
+<p dir="ltr">&nbsp; &nbsp; &nbsp; &nbsp;3.&nbsp;<strong>Ограничения</strong></p>
+
+<p dir="ltr"><strong>Функция должна:</strong></p>
+
+<ul dir="ltr">
+	<li><strong>быть непрерывна на заданном промежутке [a, b]</strong></li>
+	<li><strong>содержать на промежутке [a, b] только один корень</strong></li>
+	<li><strong>удовлетворять условию f(a)*f(b)&lt;0&nbsp;</strong><strong>(т.к. f(a) и f(b) разных знаков, и по первому ограничению функция непрерывна, то по следствию из теоремы Больцано-Коши на промежутке [a, b]&nbsp;</strong><strong>существует точка, в которой значение функции равно нулю</strong><strong>)</strong></li>
+	<li><strong>удовлетворять условию непрерывности первой и второй производной на промежутке [a, b]</strong></li>
+</ul>
+
+<p dir="ltr">&nbsp;</p>
+
+<p dir="ltr"><strong>&sect;3. МЕТОД ПРОСТЫХ ИТЕРАЦИЙ.</strong></p>
+
+<p>&nbsp; &nbsp; &nbsp; &nbsp;1.&nbsp;<strong>Описание метода</strong></p>
+
+<p><strong>Дана функция f(x), являющаяся непрерывной на промежутке [a, b] и содержащая на нём одно нулевое значение. Дана допустимая погрешность&nbsp;e&gt;0 с которой требуется вычислить приближенное значение x, чтобы выполнялось условие f(x)=0.</strong></p>
+
+<p><strong>Преобразуем функцию вида f(x)=0 к виду x=q(x) (т.е. выразим x).&nbsp;</strong></p>
+
+<p><strong>Выбираем начальное число c из промежутка [a, b] и подставляем в функцию&nbsp;x=q(x), получаем x=q(c).</strong></p>
+
+<p><strong>Вычисляем значение x. Полученное значение можно обозначить как новое значение c, которые мы вновь подставляем в функцию.</strong></p>
+
+<p>&nbsp; &nbsp; &nbsp; &nbsp;2.&nbsp;<strong>Критерий окончания</strong></p>
+
+<p><strong>Производим выше описанные манипуляции до тех пор, пока разница между x<sub>n</sub>=q(x<sub>n-1</sub>) и x<sub>n+1</sub>=q(x<sub>n</sub>)&nbsp;не будет меньше допустимой&nbsp;погрешности.</strong></p>
+
+<p>&nbsp; &nbsp; &nbsp; &nbsp;3.&nbsp;<strong>Условие сходимости</strong></p>
+
+<p><strong>Достаточным условием сходимости метода простых итераций является условие:&nbsp;</strong><img alt="" src="data:image/png;base64,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" /></p>
+
+<p><strong>которое выполняется для любого&nbsp;<em>х,</em>&nbsp;принадлежащего отрезку [<em>а</em>,&nbsp;<em>b</em>], содержащему корень уравнения.</strong></p>
+
+<p><strong>Наглядный пример свойства сходимости:</strong></p>
+
+<p><img alt="Метод простых итераций" src="https://studme.org/htm/img/15/2505/85.png" /></p>
+
+<p>&nbsp; &nbsp; &nbsp; &nbsp;4.&nbsp;<strong>Ограничения</strong></p>
+
+<p dir="ltr"><strong>Функция должна:</strong></p>
+
+<ul dir="ltr">
+	<li><strong>быть непрерывна на заданном промежутке [a, b]</strong></li>
+	<li><strong>содержать на промежутке [a, b] только один корень</strong></li>
+	<li><strong>удовлетворять условию f(a)*f(b)&lt;0</strong>&nbsp;<strong>(т.к. f(a) и f(b) разных знаков, и по первому ограничению функция непрерывна, то по следствию из теоремы Больцано-Коши на промежутке [a, b]&nbsp;</strong><strong>существует точка, в которой значение функции равно нулю</strong><strong>)</strong></li>
+</ul>
+
+<p dir="ltr"><br />
+&nbsp;</p>
+
+<p dir="ltr"><span style="font-size:20px"><strong>Требования к данным</strong></span></p>
+
+<p dir="ltr"><strong>Входные данные:</strong></p>
+
+<p dir="ltr"><strong>Во всех методах: 1) левая часть уравнения от x - строка</strong></p>
+
+<p dir="ltr">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<strong>2) точность вычисления корня Представляет собой число - десятичную дробь в виде: &quot;0.0...01&quot; </strong></p>
+
+<p dir="ltr"><strong>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;3) (Для методов Биссекции, Хорд, Касательных) границы отрезка функции - в интерфейсе обозначаются &quot;a&quot; и &quot;b&quot;.&nbsp;Представляют&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;собой числа (как целые, так и вещественные). Могут быть представлены в виде дроби </strong></p>
+
+<p dir="ltr"><strong>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;4) (Для метода простой итерации)&nbsp;начальное приближение x0 - представляет собой число (как целое, так и вещественное). Может&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;быть&nbsp;представлено в виде дроби</strong></p>
+
+<p dir="ltr">&nbsp;</p>
+
+<p dir="ltr"><strong>Уравнение может содержать некоторые логарифмические функции, а именно: </strong></p>
+
+<p dir="ltr"><strong>синус -&nbsp; при заполнении - &quot;sin(x)&quot; </strong></p>
+
+<p dir="ltr"><strong>косинус - при заполнении - &quot;cos(x)&quot; </strong></p>
+
+<p dir="ltr"><strong>тангенс - при заполнении - &quot;tg(x)&quot; </strong></p>
+
+<p dir="ltr"><strong>котангенс - при заполнении - &quot;ctg(x)&quot; </strong></p>
+
+<p dir="ltr"><strong>Ур-е может содержать степенные функции </strong></p>
+
+<p dir="ltr"><strong>Знак степени в этом случае обазначается &quot;**&quot; </strong></p>
+
+<p dir="ltr"><strong>Ур-е может содержать дроби, знак деления в этом случае обознается - &quot;/&quot; </strong></p>
+
+<p dir="ltr"><strong>Выражения со скобками обособляются с обоих сторон символами &quot;(&quot; и &quot;)&quot; слева и справа соответственно </strong></p>
+
+<p dir="ltr"><strong>Знаки умножения, сложения, вычитания обозначаются символами &quot;*&quot;, &quot;+&quot;, &quot;-&quot; соответственно </strong></p>
+
+<p dir="ltr"><strong>Переменная &quot;икс&quot; обозначается символом &quot;x&quot; </strong></p>
+
+<p dir="ltr"><strong>Разделитель для дробных чисел = &quot;.&quot;</strong></p>
+
+<p dir="ltr">&nbsp;</p>
+
+<p dir="ltr"><strong><span style="font-size:16px">ВЫХОДНЫЕ ДАННЫЕ</span> </strong></p>
+
+<p dir="ltr"><strong>Общий вид всех выходных данных ПС при успешном вычислении корней:&nbsp;</strong></p>
+
+<p dir="ltr"><strong>Название метода - строка (Например : &ldquo;Метод биссекции&rdquo;) </strong></p>
+
+<p dir="ltr"><strong>Введённое выражение - строка (Например : &ldquo; x**2 + sin(x) &rdquo;) </strong></p>
+
+<p dir="ltr"><strong>Численное значение корня - число (Например : 0.8687583054025084) </strong></p>
+
+<p dir="ltr"><strong>Точность - число (Например : 0.01) </strong></p>
+
+<p dir="ltr"><strong>Время на вычисление в секундах - число (Например : 0.01187570000001869)</strong></p>
+
+<p dir="ltr">&nbsp;</p>
+
+<p dir="ltr">&nbsp;</p>
+
+<p dir="ltr">&nbsp;</p>
+
+<p dir="ltr"><strong>СПИСОК ИСТОЧНИК<span style="font-size:16px">ОВ</span></strong></p>
+
+<ol>
+	<li dir="ltr">
+	<p dir="ltr"><strong><a href="https://scask.ru/i_book_clm.php?id=33">https://scask.ru/i_book_clm.php?id=33</a>&nbsp;метод бисекции</strong></p>
+	</li>
+	<li dir="ltr">
+	<p dir="ltr"><strong><a href="http://dit.isuct.ru/IVT/sitanov/Literatura/M501/Pages/Glava2_5.htm">http://dit.isuct.ru/IVT/sitanov/Literatura/M501/Pages/Glava2_5.htm</a>&nbsp;метод хорд и касательных</strong></p>
+	</li>
+	<li dir="ltr">
+	<p dir="ltr"><strong><a href="https://studwood.net/1660500/matematika_himiya_fizika/chislennye_metody_resheniya_nelineynyh_uravneniy_kombinirovannyy_metod">https://studwood.net/1660500/matematika_himiya_fizika/chislennye_metody_resheniya_nelineynyh_uravneniy_kombinirovannyy_metod</a>&nbsp;метод хорд и касательных</strong></p>
+	</li>
+	<li dir="ltr">
+	<p dir="ltr"><strong><a href="http://mathhelpplanet.com/static.php?p=metody-resheniya-nelineynykh-uravneniy">http://mathhelpplanet.com/static.php?p=metody-resheniya-nelineynykh-uravneniy</a>&nbsp;метод простой итерации, общие сведения о численных методах решения уравнений</strong></p>
+	</li>
+	<li dir="ltr">
+	<p dir="ltr"><strong>&nbsp;<a href="https://studfile.net/preview/5433871/" target="_blank">https://studfile.net/preview/5433871/</a>&nbsp;метод биссекции и метод Ньютона</strong></p>
+	</li>
+	<li dir="ltr">
+	<p dir="ltr"><a href="https://studme.org/199277/informatika/metod_prostyh_iteratsiy" target="_blank"><strong>https://studme.org/199277/informatika/metod_prostyh_iteratsiy</strong></a>&nbsp;<strong>метод простой итерации</strong></p>
+	</li>
+</ol>
+</body>
+</html>

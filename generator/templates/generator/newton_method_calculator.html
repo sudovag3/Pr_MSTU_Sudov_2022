@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Метод биссекции</title>
+    {% load static %}
+</head>
+<body>
+<h1>Метод Ньютона</h1>
+<form action="/newton_method_calculator_result/" method="post"> {% csrf_token %}
+    <p><label for="eval">Левая часть уравнения f(x) = 0: </label>
+    <input id="eval" type="text" name="eval" value="{{ current_name }}"></p>
+    <p><label for="e">Заданная точность (e) : </label>
+    <input id="e" type="text" name="e" value="{{ current_name }}"></p>
+    <p><label for="range">Границы отрезка : [a;b]</label>
+    <input id="a" type="text" name="a" value="{{ current_name }}">
+    <input id="b" type="text" name="b" value="{{ current_name }}"></p>
+    <input type="submit" value="Найти корень уравнения">
+</form>
+
+<p>Ответ на предыдущую задачу</p>
+<p>Выражение: {{eq}}</p>
+<p>Метод: {{method}}</p>
+<p>Точность: {{accuracy}}</p>
+<p>Результат: {{result}}</p>
+<p>Время выполнения: {{time}}</p>
+
+</body>
+</html>
