@@ -24,14 +24,16 @@ def check_currency(request):
     return render(request, 'generator/currency.html')
 
 def bisection_method_calculator_result(request):
-    eval = request.POST.get('eval')
-    mode = 1
-    e = float(request.POST.get('e'))
-    a = float(request.POST.get('a'))
-    b = float(request.POST.get('b'))
-    validateFields = validate(eval, e, a, b)
-    print(validateFields)
+    validateFields = validate(request.POST.get('eval'), request.POST.get('e'), request.POST.get('a'), request.POST.get('b'))
     if validateFields:
+        eval = request.POST.get('eval')
+        mode = 1
+        e = float(request.POST.get('e'))
+        a = float(request.POST.get('a'))
+        b = float(request.POST.get('b'))
+
+        print(validateFields)
+
         result =  eq_par({'mode':1, 'evalx': eval, 'eps': e, 'a': a, 'b': b})
         print(result)
         return render(request, 'generator/bisection_method_calculator.html', result)
@@ -40,14 +42,16 @@ def bisection_method_calculator_result(request):
 
 
 def chord_method_calculator_result(request):
-    eval = request.POST.get('eval')
-    mode = 2
-    e = float(request.POST.get('e'))
-    a = float(request.POST.get('a'))
-    b = float(request.POST.get('b'))
-    validateFields = validate(eval, e, a, b)
-    print(validateFields)
+    validateFields = validate(request.POST.get('eval'), request.POST.get('e'), request.POST.get('a'), request.POST.get('b'))
     if validateFields:
+        eval = request.POST.get('eval')
+        mode = 2
+        e = float(request.POST.get('e'))
+        a = float(request.POST.get('a'))
+        b = float(request.POST.get('b'))
+        validateFields = validate(eval, e, a, b)
+        print(validateFields)
+
         result =  eq_par({'mode':2, 'evalx': eval, 'eps': e, 'a': a, 'b': b})
         print(result)
         return render(request, 'generator/chord_method_calculator.html', result)
@@ -55,14 +59,15 @@ def chord_method_calculator_result(request):
         return render(request, 'generator/bisection_method_calculator.html', {'error': 'Заполните все поля!'})
 
 def newton_method_calculator_result(request):
-    eval = request.POST.get('eval')
-    mode = 3
-    e = float(request.POST.get('e'))
-    a = float(request.POST.get('a'))
-    b = float(request.POST.get('b'))
-    validateFields = validate(eval, e, a, b)
-    print(validateFields)
+    validateFields = validate(request.POST.get('eval'), request.POST.get('e'), request.POST.get('a'), request.POST.get('b'))
     if validateFields:
+        eval = request.POST.get('eval')
+        mode = 3
+        e = float(request.POST.get('e'))
+        a = float(request.POST.get('a'))
+        b = float(request.POST.get('b'))
+        validateFields = validate(eval, e, a, b)
+        print(validateFields)
         result =  eq_par({'mode':3, 'evalx': eval, 'eps': e, 'a': a, 'b': b})
         print(result)
         return render(request, 'generator/newton_method_calculator.html', result)
@@ -70,13 +75,14 @@ def newton_method_calculator_result(request):
         return render(request, 'generator/bisection_method_calculator.html', {'error': 'Заполните все поля!'})
 
 def simple_iteration_method_calculator_result(request):
-    eval = request.POST.get('eval')
-    mode = 4
-    e = float(request.POST.get('e'))
-    x0 = float(request.POST.get('x0'))
-    validateFields = validate(eval, x0)
-    print(validateFields)
+    validateFields = validate(request.POST.get('eval'), request.POST.get('e'), request.POST.get('x0'))
     if validateFields:
+        eval = request.POST.get('eval')
+        mode = 4
+        e = float(request.POST.get('e'))
+        x0 = float(request.POST.get('x0'))
+        validateFields = validate(eval, x0)
+        print(validateFields)
         result =  eq_par({'mode':4, 'evalx': eval, 'eps': e, 'x0': x0})
         print(result)
         return render(request, 'generator/simple_iteration_method_calculator.html', result)
