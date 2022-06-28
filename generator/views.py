@@ -31,9 +31,12 @@ def bisection_method_calculator_result(request):
     b = float(request.POST.get('b'))
     validateFields = validate(eval, e, a, b)
     print(validateFields)
-    result =  eq_par({'mode':1, 'evalx': eval, 'eps': e, 'a': a, 'b': b})
-    print(result)
-    return render(request, 'generator/bisection_method_calculator.html', result)
+    if validateFields:
+        result =  eq_par({'mode':1, 'evalx': eval, 'eps': e, 'a': a, 'b': b})
+        print(result)
+        return render(request, 'generator/bisection_method_calculator.html', result)
+    else:
+        return render(request, 'generator/bisection_method_calculator.html', {'error': 'Заполните все поля!'})
 
 
 def chord_method_calculator_result(request):
@@ -44,10 +47,12 @@ def chord_method_calculator_result(request):
     b = float(request.POST.get('b'))
     validateFields = validate(eval, e, a, b)
     print(validateFields)
-    result =  eq_par({'mode':2, 'evalx': eval, 'eps': e, 'a': a, 'b': b})
-    print(result)
-    return render(request, 'generator/chord_method_calculator.html', result)
-
+    if validateFields:
+        result =  eq_par({'mode':2, 'evalx': eval, 'eps': e, 'a': a, 'b': b})
+        print(result)
+        return render(request, 'generator/chord_method_calculator.html', result)
+    else:
+        return render(request, 'generator/bisection_method_calculator.html', {'error': 'Заполните все поля!'})
 
 def newton_method_calculator_result(request):
     eval = request.POST.get('eval')
@@ -57,10 +62,12 @@ def newton_method_calculator_result(request):
     b = float(request.POST.get('b'))
     validateFields = validate(eval, e, a, b)
     print(validateFields)
-    result =  eq_par({'mode':3, 'evalx': eval, 'eps': e, 'a': a, 'b': b})
-    print(result)
-    return render(request, 'generator/newton_method_calculator.html', result)
-
+    if validateFields:
+        result =  eq_par({'mode':3, 'evalx': eval, 'eps': e, 'a': a, 'b': b})
+        print(result)
+        return render(request, 'generator/newton_method_calculator.html', result)
+    else:
+        return render(request, 'generator/bisection_method_calculator.html', {'error': 'Заполните все поля!'})
 
 def simple_iteration_method_calculator_result(request):
     eval = request.POST.get('eval')
@@ -69,10 +76,12 @@ def simple_iteration_method_calculator_result(request):
     x0 = float(request.POST.get('x0'))
     validateFields = validate(eval, x0)
     print(validateFields)
-    result =  eq_par({'mode':4, 'evalx': eval, 'eps': e, 'x0': x0})
-    print(result)
-    return render(request, 'generator/simple_iteration_method_calculator.html', result)
-
+    if validateFields:
+        result =  eq_par({'mode':4, 'evalx': eval, 'eps': e, 'x0': x0})
+        print(result)
+        return render(request, 'generator/simple_iteration_method_calculator.html', result)
+    else:
+        return render(request, 'generator/bisection_method_calculator.html', {'error': 'Заполните все поля!'})
 
 def password(request):
 
