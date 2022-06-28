@@ -118,4 +118,4 @@ def validate(*args):
     for element in args:
         if element == '':
             return False
-        return True
+    return True
