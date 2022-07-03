@@ -125,7 +125,9 @@ def NewtonsMethod(a, b, evalx, eps):
 def SimpleIterationMethod(evalx, eps, x0):
     EVALX = evalx
 
-    def function(x):
+    def function(x, fi=False):
+        if fi == True:
+            return eval(EVALX + "+ x")
         if x == 'x':
             from sympy import sin, cos, log, tan, cot
             x = sympy.symbols('x')
