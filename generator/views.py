@@ -89,15 +89,6 @@ def simple_iteration_method_calculator_result(request):
     else:
         return render(request, 'generator/bisection_method_calculator.html', {'error': 'Заполните все поля!'})
 
-def password(request):
-
-    length = int(request.GET.get('length', 10))
-    numbers = request.GET.get('numbers', '')
-    uppercase = request.GET.get('uppercase', '')
-    special = request.GET.get('special', '')
-
-    gen_password = generate_password(length=length, numbers=numbers, uppercase=uppercase, special=special)
-    return render(request, 'generator/password.html', {'password':gen_password})
 
 def eq_par(params):
     result = {}
@@ -111,7 +102,9 @@ def eq_par(params):
         result = sne.SimpleIterationMethod(params['evalx'], params['eps'], params['x0'])
     else:
         result['error'] = 'Метод вычисления указан неправильно указан неправильно'
-
+    lenr = len(str(params['eps']))
+    result['time'] = str(result['time'])[:5]
+    result['result'] = str(result['result'])[:lenr]
     return result
 
 def validate(*args):

@@ -19,9 +19,6 @@ from generator import views
 
 urlpatterns = [
     path('', views.home),
-    path('admin/', admin.site.urls),
-    path('currency', views.check_currency, name='get_currency'),
-    path('generated_password', views.password, name='password'),
     path('bisection_method_calculator', views.bisection_method_calculator),
     path('chord_method_calculator', views.chord_method_calculator),
     path('newton_method_calculator', views.newton_method_calculator),
